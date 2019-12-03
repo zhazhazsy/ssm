@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--mysql-connect-java-->
+    <classPathEntry
+            location="D:\\IntelliJ IDEA 2019.2.1\\maven-3.6.1\\repository\\mysql\\mysql-connector-java\\5.1.47\\mysql-connector-java-5.1.47.jar"/>
+
+    <context id="MysqlTables" targetRuntime="MyBatis3">
+        <!--去除注释  -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/watch"
+                        userId="root"
+                        password="123">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.ssm.zi.model" targetProject="src\main\java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="resources.mapper" targetProject="src/main">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.ssm.zi.dao" targetProject="src/main/java"
+                             type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+        <!--  想要逆向生成的表在这里进行配置   -->
+        <table tableName="%"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true"/>
+    </context>
+</generatorConfiguration>
