@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.zi.dao.DataDictionaryMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.zi.model.DataDictionary">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="typeCode" jdbcType="VARCHAR" property="typecode" />
+    <result column="typeName" jdbcType="VARCHAR" property="typename" />
+    <result column="valueId" jdbcType="BIGINT" property="valueid" />
+    <result column="valueName" jdbcType="VARCHAR" property="valuename" />
+    <result column="createdBy" jdbcType="BIGINT" property="createdby" />
+    <result column="creationDate" jdbcType="TIMESTAMP" property="creationdate" />
+    <result column="modifyBy" jdbcType="BIGINT" property="modifyby" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, typeCode, typeName, valueId, valueName, createdBy, creationDate, modifyBy, modifyDate
+  </sql>
+  
+  <select id="selectType" parameterType="Long" resultType="com.ssm.zi.model.DataDictionary">
+    select * from data_dictionary where typeCode = 'APP_FLATFORM' and valueId = #{id}
+  </select>
+
+
+  <select id="selectStatus" parameterType="Long" resultType="com.ssm.zi.model.DataDictionary">
+    select * from data_dictionary where typeCode = 'APP_STATUS' and valueId = #{id}
+  </select>
+
+  <select id="selectStatu" resultType="com.ssm.zi.model.DataDictionary">
+    SELECT * FROM data_dictionary WHERE typeCode = 'APP_STATUS'
+  </select>
+
+  <select id="selectTypes" resultType="com.ssm.zi.model.DataDictionary">
+    select * from data_dictionary where typeCode = 'APP_FLATFORM'
+  </select>
+  
+  <select id="selectByExample" parameterType="com.ssm.zi.model.DataDictionaryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from data_dictionary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from data_dictionary
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from data_dictionary
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.zi.model.DataDictionaryExample">
+    delete from data_dictionary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.zi.model.DataDictionary">
+    insert into data_dictionary (id, typeCode, typeName, 
+      valueId, valueName, createdBy, 
+      creationDate, modifyBy, modifyDate
+      )
+    values (#{id,jdbcType=BIGINT}, #{typecode,jdbcType=VARCHAR}, #{typename,jdbcType=VARCHAR}, 
+      #{valueid,jdbcType=BIGINT}, #{valuename,jdbcType=VARCHAR}, #{createdby,jdbcType=BIGINT}, 
+      #{creationdate,jdbcType=TIMESTAMP}, #{modifyby,jdbcType=BIGINT}, #{modifydate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.zi.model.DataDictionary">
+    insert into data_dictionary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="typecode != null">
+        typeCode,
+      </if>
+      <if test="typename != null">
+        typeName,
+      </if>
+      <if test="valueid != null">
+        valueId,
+      </if>
+      <if test="valuename != null">
+        valueName,
+      </if>
+      <if test="createdby != null">
+        createdBy,
+      </if>
+      <if test="creationdate != null">
+        creationDate,
+      </if>
+      <if test="modifyby != null">
+        modifyBy,
+      </if>
+      <if test="modifydate != null">
+        modifyDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="typecode != null">
+        #{typecode,jdbcType=VARCHAR},
+      </if>
+      <if test="typename != null">
+        #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="valueid != null">
+        #{valueid,jdbcType=BIGINT},
+      </if>
+      <if test="valuename != null">
+        #{valuename,jdbcType=VARCHAR},
+      </if>
+      <if test="createdby != null">
+        #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="creationdate != null">
+        #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        #{modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null">
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.zi.model.DataDictionaryExample" resultType="java.lang.Long">
+    select count(*) from data_dictionary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update data_dictionary
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.typecode != null">
+        typeCode = #{record.typecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typename != null">
+        typeName = #{record.typename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.valueid != null">
+        valueId = #{record.valueid,jdbcType=BIGINT},
+      </if>
+      <if test="record.valuename != null">
+        valueName = #{record.valuename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdby != null">
+        createdBy = #{record.createdby,jdbcType=BIGINT},
+      </if>
+      <if test="record.creationdate != null">
+        creationDate = #{record.creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyby != null">
+        modifyBy = #{record.modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifydate != null">
+        modifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update data_dictionary
+    set id = #{record.id,jdbcType=BIGINT},
+      typeCode = #{record.typecode,jdbcType=VARCHAR},
+      typeName = #{record.typename,jdbcType=VARCHAR},
+      valueId = #{record.valueid,jdbcType=BIGINT},
+      valueName = #{record.valuename,jdbcType=VARCHAR},
+      createdBy = #{record.createdby,jdbcType=BIGINT},
+      creationDate = #{record.creationdate,jdbcType=TIMESTAMP},
+      modifyBy = #{record.modifyby,jdbcType=BIGINT},
+      modifyDate = #{record.modifydate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.zi.model.DataDictionary">
+    update data_dictionary
+    <set>
+      <if test="typecode != null">
+        typeCode = #{typecode,jdbcType=VARCHAR},
+      </if>
+      <if test="typename != null">
+        typeName = #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="valueid != null">
+        valueId = #{valueid,jdbcType=BIGINT},
+      </if>
+      <if test="valuename != null">
+        valueName = #{valuename,jdbcType=VARCHAR},
+      </if>
+      <if test="createdby != null">
+        createdBy = #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="creationdate != null">
+        creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        modifyBy = #{modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null">
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.zi.model.DataDictionary">
+    update data_dictionary
+    set typeCode = #{typecode,jdbcType=VARCHAR},
+      typeName = #{typename,jdbcType=VARCHAR},
+      valueId = #{valueid,jdbcType=BIGINT},
+      valueName = #{valuename,jdbcType=VARCHAR},
+      createdBy = #{createdby,jdbcType=BIGINT},
+      creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      modifyBy = #{modifyby,jdbcType=BIGINT},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

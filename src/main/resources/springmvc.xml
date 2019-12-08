@@ -23,6 +23,21 @@
     <mvc:resources mapping="/js/**" location="/js/" cache-period="31536000"/>
     <mvc:resources mapping="/**" location="/" cache-period="31536000"/>
     <mvc:default-servlet-handler/>
+    <!--拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/dev"/>
+            <bean class="com.ssm.zi.interceptors.DevInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/dev/**"/>
+            <mvc:exclude-mapping path="/dev/dologin" />
+            <mvc:exclude-mapping path="/dev/login" />
+            <bean class="com.ssm.zi.interceptors.DevInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    
+    
     <bean id="mappingJacksonHttpMessageConverter"
           class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
         <property name="supportedMediaTypes">
@@ -45,7 +60,7 @@
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           id="viewResolver">
         <!-- 自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
-        <property name="prefix" value="/WEB-INF/page/" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
         <property name="suffix" value=".jsp" />
     </bean>
 

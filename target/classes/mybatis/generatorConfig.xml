@@ -15,7 +15,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/watch"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/appinfodb"
                         userId="root"
                         password="123">
         </jdbcConnection>
