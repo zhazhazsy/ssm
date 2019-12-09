@@ -194,6 +194,8 @@ $(".deleteApp").on("click",function(){
 					alert("对不起，删除AAP应用【"+obj.attr("appsoftwarename")+"】失败");
 				}else if(data.delResult == "notexist"){
 					alert("对不起，APP应用【"+obj.attr("appsoftwarename")+"】不存在");
+				} else {
+					alert("未知错误");
 				}
 			},
 			error:function(data){

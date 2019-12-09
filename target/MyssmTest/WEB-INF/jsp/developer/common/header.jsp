@@ -28,10 +28,12 @@
 	<link href="${pageContext.request.contextPath }/statics/css/dropzone.min.css" rel="stylesheet">
 	<!-- Custom Theme Style -->
 	<link href="${pageContext.request.contextPath }/statics/css/custom.min.css"	rel="stylesheet">
-	
 	<!-- add localcss 2016-8-18 -->
 	<link href='${pageContext.request.contextPath }/statics/localcss/appinfoadd.css' rel='stylesheet'>
 	<link href='${pageContext.request.contextPath }/statics/localcss/appinfolist.css' rel='stylesheet'>
+	<link href="${pageContext.request.contextPath }/statics/css/cPager.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/statics/css/normalize.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath }/statics/css/demo.css" rel="stylesheet">
 
 </head>
 <body class="nav-md footer_fixed" ng-app="dev" app-controller="DevController" ng-init="kai()">

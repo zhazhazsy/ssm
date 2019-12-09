@@ -13,6 +13,11 @@ public class ManagerController {
 
     @RequestMapping("/login")
     public String devlogin(){
-        return "backendlogin";
+        return "/backendlogin";
+    }
+
+    @RequestMapping("/dologin")
+    public String dologin(){
+        return "backend/main";
     }
 }

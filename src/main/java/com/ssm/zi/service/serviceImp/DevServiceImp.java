@@ -146,7 +146,7 @@ public class DevServiceImp implements DevService {
         int a = appInfoMapper.deleteByPrimaryKey(id);
         int b = appVersionMapper.deleteAppVersionAll(id);
         int c = 0;
-        if (a>0&&b>0) {
+        if (a>0&&b>=0) {
             c = 1;
         }
         return c;

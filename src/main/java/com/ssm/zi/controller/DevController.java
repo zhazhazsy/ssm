@@ -46,14 +46,14 @@ public class DevController {
         return "devlogin";
     }
 
-    /*-------------------------------------------------------注销---------------------------*/
+    /*-------------------------------------------------------注销----------------------------------------------*/
     @RequestMapping("logout")
     public String logout(HttpServletRequest request, HttpSession session){
         session.removeAttribute("devUserSession");
         return "devlogin";
     }
 
-    /*--------------------------------------------------查询所有app信息--------------------------*/
+    /*--------------------------------------------------查询所有app信息-----------------------------------------*/
     @RequestMapping("/flatform/app/list")//被appinfoaddsave调用了
     public String selectList(Model model){
         List<AppInfo> list1 = devService.selectAll();
@@ -66,7 +66,7 @@ public class DevController {
         model.addAttribute("categoryLevel1List",categoryLevel1List);
         return "developer/appinfolist";
     }
-    /*-------------------------------------------------------------关联表****--------------------*/
+    /*-------------------------------------------------------------关联表****---------------------------------*/
     public List<AppInfo> demo(List<AppInfo> list){
         List<AppInfo> list2 = new ArrayList<>();
         for (AppInfo l:list){
@@ -80,7 +80,7 @@ public class DevController {
         }
         return list2;
     }
-    /*----------------------------------------------------------------二级菜单*------------------*/
+    /*----------------------------------------------------------------二级菜单*-----------------------------------*/
     @RequestMapping(
             value = {"/categorylevellist.json"},
             method = {RequestMethod.GET}
