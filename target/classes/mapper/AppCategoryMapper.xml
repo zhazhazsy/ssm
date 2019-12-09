@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.zi.dao.AppCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.zi.model.AppCategory">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="categoryCode" jdbcType="VARCHAR" property="categorycode" />
+    <result column="categoryName" jdbcType="VARCHAR" property="categoryname" />
+    <result column="parentId" jdbcType="BIGINT" property="parentid" />
+    <result column="createdBy" jdbcType="BIGINT" property="createdby" />
+    <result column="creationTime" jdbcType="TIMESTAMP" property="creationtime" />
+    <result column="modifyBy" jdbcType="BIGINT" property="modifyby" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, categoryCode, categoryName, parentId, createdBy, creationTime, modifyBy, modifyDate
+  </sql>
+  <select id="selectByExample" parameterType="com.ssm.zi.model.AppCategoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from app_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectCate" parameterType="Long" resultType="String">
+    select categoryName from app_category where id = #{id}
+  </select>
+
+  <select id="no1" resultType="com.ssm.zi.model.AppCategory">
+    SELECT * FROM app_category WHERE id = 1 or id = 2
+  </select>
+
+  <select id="nox" resultType="com.ssm.zi.model.AppCategory" parameterType="Long">
+    select * from app_category where parentId = #{pid}
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_category
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from app_category
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.zi.model.AppCategoryExample">
+    delete from app_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.zi.model.AppCategory">
+    insert into app_category (id, categoryCode, categoryName, 
+      parentId, createdBy, creationTime, 
+      modifyBy, modifyDate)
+    values (#{id,jdbcType=BIGINT}, #{categorycode,jdbcType=VARCHAR}, #{categoryname,jdbcType=VARCHAR}, 
+      #{parentid,jdbcType=BIGINT}, #{createdby,jdbcType=BIGINT}, #{creationtime,jdbcType=TIMESTAMP}, 
+      #{modifyby,jdbcType=BIGINT}, #{modifydate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.zi.model.AppCategory">
+    insert into app_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="categorycode != null">
+        categoryCode,
+      </if>
+      <if test="categoryname != null">
+        categoryName,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+      <if test="createdby != null">
+        createdBy,
+      </if>
+      <if test="creationtime != null">
+        creationTime,
+      </if>
+      <if test="modifyby != null">
+        modifyBy,
+      </if>
+      <if test="modifydate != null">
+        modifyDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="categorycode != null">
+        #{categorycode,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryname != null">
+        #{categoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=BIGINT},
+      </if>
+      <if test="createdby != null">
+        #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="creationtime != null">
+        #{creationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        #{modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null">
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.zi.model.AppCategoryExample" resultType="java.lang.Long">
+    select count(*) from app_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update app_category
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.categorycode != null">
+        categoryCode = #{record.categorycode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.categoryname != null">
+        categoryName = #{record.categoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null">
+        parentId = #{record.parentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.createdby != null">
+        createdBy = #{record.createdby,jdbcType=BIGINT},
+      </if>
+      <if test="record.creationtime != null">
+        creationTime = #{record.creationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyby != null">
+        modifyBy = #{record.modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifydate != null">
+        modifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update app_category
+    set id = #{record.id,jdbcType=BIGINT},
+      categoryCode = #{record.categorycode,jdbcType=VARCHAR},
+      categoryName = #{record.categoryname,jdbcType=VARCHAR},
+      parentId = #{record.parentid,jdbcType=BIGINT},
+      createdBy = #{record.createdby,jdbcType=BIGINT},
+      creationTime = #{record.creationtime,jdbcType=TIMESTAMP},
+      modifyBy = #{record.modifyby,jdbcType=BIGINT},
+      modifyDate = #{record.modifydate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.zi.model.AppCategory">
+    update app_category
+    <set>
+      <if test="categorycode != null">
+        categoryCode = #{categorycode,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryname != null">
+        categoryName = #{categoryname,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        parentId = #{parentid,jdbcType=BIGINT},
+      </if>
+      <if test="createdby != null">
+        createdBy = #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="creationtime != null">
+        creationTime = #{creationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        modifyBy = #{modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null">
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.zi.model.AppCategory">
+    update app_category
+    set categoryCode = #{categorycode,jdbcType=VARCHAR},
+      categoryName = #{categoryname,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=BIGINT},
+      createdBy = #{createdby,jdbcType=BIGINT},
+      creationTime = #{creationtime,jdbcType=TIMESTAMP},
+      modifyBy = #{modifyby,jdbcType=BIGINT},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

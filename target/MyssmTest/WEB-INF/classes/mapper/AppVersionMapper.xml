@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.zi.dao.AppVersionMapper">
+  <resultMap id="BaseResultMap" type="com.ssm.zi.model.AppVersion">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="appId" jdbcType="BIGINT" property="appid" />
+    <result column="versionNo" jdbcType="VARCHAR" property="versionno" />
+    <result column="versionInfo" jdbcType="VARCHAR" property="versioninfo" />
+    <result column="publishStatus" jdbcType="BIGINT" property="publishstatus" />
+    <result column="downloadLink" jdbcType="VARCHAR" property="downloadlink" />
+    <result column="versionSize" jdbcType="DECIMAL" property="versionsize" />
+    <result column="createdBy" jdbcType="BIGINT" property="createdby" />
+    <result column="creationDate" jdbcType="TIMESTAMP" property="creationdate" />
+    <result column="modifyBy" jdbcType="BIGINT" property="modifyby" />
+    <result column="modifyDate" jdbcType="TIMESTAMP" property="modifydate" />
+    <result column="apkLocPath" jdbcType="VARCHAR" property="apklocpath" />
+    <result column="apkFileName" jdbcType="VARCHAR" property="apkfilename" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, appId, versionNo, versionInfo, publishStatus, downloadLink, versionSize, createdBy, 
+    creationDate, modifyBy, modifyDate, apkLocPath, apkFileName
+  </sql>
+
+  <select id="selectVersioned" parameterType="Long" resultType="com.ssm.zi.model.AppVersion">
+    SELECT * FROM app_version WHERE appId = #{appid}
+  </select>
+
+  <select id="selectVersion" resultType="String" parameterType="Long">
+    SELECT versionNo FROM app_version WHERE id = #{id}
+  </select>
+
+  <select id="selectByExample" parameterType="com.ssm.zi.model.AppVersionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from app_version
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from app_version
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from app_version
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ssm.zi.model.AppVersionExample">
+    delete from app_version
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ssm.zi.model.AppVersion">
+    insert into app_version (id, appId, versionNo, 
+      versionInfo, publishStatus, downloadLink, 
+      versionSize, createdBy, creationDate, 
+      modifyBy, modifyDate, apkLocPath, 
+      apkFileName)
+    values (#{id,jdbcType=BIGINT}, #{appid,jdbcType=BIGINT}, #{versionno,jdbcType=VARCHAR}, 
+      #{versioninfo,jdbcType=VARCHAR}, #{publishstatus,jdbcType=BIGINT}, #{downloadlink,jdbcType=VARCHAR}, 
+      #{versionsize,jdbcType=DECIMAL}, #{createdby,jdbcType=BIGINT}, #{creationdate,jdbcType=TIMESTAMP}, 
+      #{modifyby,jdbcType=BIGINT}, #{modifydate,jdbcType=TIMESTAMP}, #{apklocpath,jdbcType=VARCHAR}, 
+      #{apkfilename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.zi.model.AppVersion">
+    <selectKey resultType="Long" keyProperty="id" order="AFTER">
+      SELECT LAST_INSERT_ID() as id
+    </selectKey>
+    insert into app_version
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="appid != null">
+        appId,
+      </if>
+      <if test="versionno != null">
+        versionNo,
+      </if>
+      <if test="versioninfo != null">
+        versionInfo,
+      </if>
+      <if test="publishstatus != null">
+        publishStatus,
+      </if>
+      <if test="downloadlink != null">
+        downloadLink,
+      </if>
+      <if test="versionsize != null">
+        versionSize,
+      </if>
+      <if test="createdby != null">
+        createdBy,
+      </if>
+      <if test="creationdate != null">
+        creationDate,
+      </if>
+      <if test="modifyby != null">
+        modifyBy,
+      </if>
+      <if test="modifydate != null">
+        modifyDate,
+      </if>
+      <if test="apklocpath != null">
+        apkLocPath,
+      </if>
+      <if test="apkfilename != null">
+        apkFileName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=BIGINT},
+      </if>
+      <if test="versionno != null">
+        #{versionno,jdbcType=VARCHAR},
+      </if>
+      <if test="versioninfo != null">
+        #{versioninfo,jdbcType=VARCHAR},
+      </if>
+      <if test="publishstatus != null">
+        #{publishstatus,jdbcType=BIGINT},
+      </if>
+      <if test="downloadlink != null">
+        #{downloadlink,jdbcType=VARCHAR},
+      </if>
+      <if test="versionsize != null">
+        #{versionsize,jdbcType=DECIMAL},
+      </if>
+      <if test="createdby != null">
+        #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="creationdate != null">
+        #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        #{modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null">
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="apklocpath != null">
+        #{apklocpath,jdbcType=VARCHAR},
+      </if>
+      <if test="apkfilename != null">
+        #{apkfilename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ssm.zi.model.AppVersionExample" resultType="java.lang.Long">
+    select count(*) from app_version
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update app_version
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.appid != null">
+        appId = #{record.appid,jdbcType=BIGINT},
+      </if>
+      <if test="record.versionno != null">
+        versionNo = #{record.versionno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versioninfo != null">
+        versionInfo = #{record.versioninfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishstatus != null">
+        publishStatus = #{record.publishstatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.downloadlink != null">
+        downloadLink = #{record.downloadlink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versionsize != null">
+        versionSize = #{record.versionsize,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createdby != null">
+        createdBy = #{record.createdby,jdbcType=BIGINT},
+      </if>
+      <if test="record.creationdate != null">
+        creationDate = #{record.creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyby != null">
+        modifyBy = #{record.modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifydate != null">
+        modifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.apklocpath != null">
+        apkLocPath = #{record.apklocpath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apkfilename != null">
+        apkFileName = #{record.apkfilename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update app_version
+    set id = #{record.id,jdbcType=BIGINT},
+      appId = #{record.appid,jdbcType=BIGINT},
+      versionNo = #{record.versionno,jdbcType=VARCHAR},
+      versionInfo = #{record.versioninfo,jdbcType=VARCHAR},
+      publishStatus = #{record.publishstatus,jdbcType=BIGINT},
+      downloadLink = #{record.downloadlink,jdbcType=VARCHAR},
+      versionSize = #{record.versionsize,jdbcType=DECIMAL},
+      createdBy = #{record.createdby,jdbcType=BIGINT},
+      creationDate = #{record.creationdate,jdbcType=TIMESTAMP},
+      modifyBy = #{record.modifyby,jdbcType=BIGINT},
+      modifyDate = #{record.modifydate,jdbcType=TIMESTAMP},
+      apkLocPath = #{record.apklocpath,jdbcType=VARCHAR},
+      apkFileName = #{record.apkfilename,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.zi.model.AppVersion">
+    update app_version
+    <set>
+      <if test="appid != null">
+        appId = #{appid,jdbcType=BIGINT},
+      </if>
+      <if test="versionno != null">
+        versionNo = #{versionno,jdbcType=VARCHAR},
+      </if>
+      <if test="versioninfo != null">
+        versionInfo = #{versioninfo,jdbcType=VARCHAR},
+      </if>
+      <if test="publishstatus != null">
+        publishStatus = #{publishstatus,jdbcType=BIGINT},
+      </if>
+      <if test="downloadlink != null">
+        downloadLink = #{downloadlink,jdbcType=VARCHAR},
+      </if>
+      <if test="versionsize != null">
+        versionSize = #{versionsize,jdbcType=DECIMAL},
+      </if>
+      <if test="createdby != null">
+        createdBy = #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="creationdate != null">
+        creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyby != null">
+        modifyBy = #{modifyby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null">
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="apklocpath != null">
+        apkLocPath = #{apklocpath,jdbcType=VARCHAR},
+      </if>
+      <if test="apkfilename != null">
+        apkFileName = #{apkfilename,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.zi.model.AppVersion">
+    update app_version
+    set appId = #{appid,jdbcType=BIGINT},
+      versionNo = #{versionno,jdbcType=VARCHAR},
+      versionInfo = #{versioninfo,jdbcType=VARCHAR},
+      publishStatus = #{publishstatus,jdbcType=BIGINT},
+      downloadLink = #{downloadlink,jdbcType=VARCHAR},
+      versionSize = #{versionsize,jdbcType=DECIMAL},
+      createdBy = #{createdby,jdbcType=BIGINT},
+      creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      modifyBy = #{modifyby,jdbcType=BIGINT},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      apkLocPath = #{apklocpath,jdbcType=VARCHAR},
+      apkFileName = #{apkfilename,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <delete id="deleteAppVersionAll" parameterType="Long">
+    delete from where appId = #{id}
+  </delete>
+</mapper>
