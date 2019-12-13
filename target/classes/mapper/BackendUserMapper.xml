@@ -274,4 +274,8 @@
       userPassword = #{userpassword,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="loginIn" parameterType="String" resultType="com.ssm.zi.model.BackendUser">
+      select * from backend_user where userCode = #{usercode}
+  </select>
 </mapper>

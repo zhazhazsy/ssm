@@ -36,7 +36,7 @@
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="${pageContext.request.contextPath }/manager/backend/main" class="site_title"><i class="fa fa-paw"></i> <span>APP BMS</span></a>
+              <a href="${pageContext.request.contextPath }/manage/backend/main" class="site_title"><i class="fa fa-paw"></i> <span>APP BMS</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -48,7 +48,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>${userSession.userCode }</h2>
+                <h2>${backendUserSession.username }</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -62,7 +62,7 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> APP管理 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="${pageContext.request.contextPath }/manager/backend/app/list">APP审核</a></li>
+                      <li><a href="${pageContext.request.contextPath }/manage/backend/app/list">APP审核</a></li>
                       <li><a href="javascript:;">广告推广</a></li>
                     </ul>
                   </li>
@@ -119,7 +119,7 @@
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="${pageContext.request.contextPath }/manager/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="${pageContext.request.contextPath }/manage/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
 

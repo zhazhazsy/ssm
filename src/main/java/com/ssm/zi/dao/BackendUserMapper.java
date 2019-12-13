@@ -27,4 +27,6 @@ public interface BackendUserMapper {
     int updateByPrimaryKeySelective(BackendUser record);
 
     int updateByPrimaryKey(BackendUser record);
+
+    BackendUser loginIn(String usercode);
 }

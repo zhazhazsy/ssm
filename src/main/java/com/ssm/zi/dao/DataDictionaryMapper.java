@@ -36,4 +36,6 @@ public interface DataDictionaryMapper {
     int updateByPrimaryKeySelective(DataDictionary record);
 
     int updateByPrimaryKey(DataDictionary record);
+
+    String userTypeById(Long id);
 }

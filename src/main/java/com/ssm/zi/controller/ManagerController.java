@@ -11,13 +11,13 @@ public class ManagerController {
     @Autowired
     private DevService devService;
 
-    @RequestMapping("/login")
+   /* @RequestMapping("/login")
     public String devlogin(){
         return "/backendlogin";
-    }
+    }*/
 
-    @RequestMapping("/dologin")
+    /*@RequestMapping("/dologin")
     public String dologin(){
         return "backend/main";
-    }
+    }*/
 }

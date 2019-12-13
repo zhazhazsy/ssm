@@ -121,7 +121,6 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
 				<input type="hidden" id="logoPicPath" name="logoPicPath" value="${appInfo.logopicpath}"/>
-            	<input type="hidden" id="logoLocPath" name="logoLocPath" value="${appInfo.logolocpath}"/>
 				<div id="uploadfile" style="display: none">
 				<input id="attach"  type="file" class="form-control col-md-7 col-xs-12" name="attach">
 				<p><span style="color:red;font-weight: bold;">*注：1、大小不得超过500k.2、图片格式：jpg、png、jpeg、pneg</span></p>

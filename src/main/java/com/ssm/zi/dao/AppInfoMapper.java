@@ -33,4 +33,6 @@ public interface AppInfoMapper {
     List<AppInfo> selectAll();
 
     Long exists(String APKName);
+
+    int checkApp(Long id);
 }

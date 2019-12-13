@@ -33,4 +33,8 @@ public interface AppCategoryMapper {
     int updateByPrimaryKeySelective(AppCategory record);
 
     int updateByPrimaryKey(AppCategory record);
+
+    List<AppCategory> selectLevel2();
+
+    List<AppCategory> selectLevel3();
 }

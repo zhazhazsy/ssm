@@ -14,7 +14,7 @@
 				<div class="clearfix"></div>
 			</div>
 			<div class="x_content">
-				<form method="post" action="list">
+				<form method="post" action="/manage/list">
 					<input type="hidden" name="pageIndex" value="1" />
 			    <ul>
 					<li>
@@ -34,8 +34,8 @@
 									<c:if test="${flatFormList != null }">
 									   <option value="">--请选择--</option>
 									   <c:forEach var="dataDictionary" items="${flatFormList}">
-									   		<option <c:if test="${dataDictionary.valueId == queryFlatformId }">selected="selected"</c:if>
-									   		value="${dataDictionary.valueId}">${dataDictionary.valueName}</option>
+									   		<option <c:if test="${dataDictionary.valueid == queryFlatformId }">selected="selected"</c:if>
+									   		value="${dataDictionary.valueid}">${dataDictionary.valuename}</option>
 									   </c:forEach>
 									</c:if>
         						</select>
@@ -51,7 +51,7 @@
 									   <option value="">--请选择--</option>
 									   <c:forEach var="appCategory" items="${categoryLevel1List}">
 									   		<option <c:if test="${appCategory.id == queryCategoryLevel1 }">selected="selected"</c:if>
-									   		value="${appCategory.id}">${appCategory.categoryName}</option>
+									   		value="${appCategory.id}">${appCategory.categoryname}</option>
 									   </c:forEach>
 									</c:if>
         						</select>
@@ -68,7 +68,7 @@
 									   <option value="">--请选择--</option>
 									   <c:forEach var="appCategory" items="${categoryLevel2List}">
 									   		<option <c:if test="${appCategory.id == queryCategoryLevel2 }">selected="selected"</c:if>
-									   		value="${appCategory.id}">${appCategory.categoryName}</option>
+									   		value="${appCategory.id}">${appCategory.categoryname}</option>
 									   </c:forEach>
 									</c:if>
         						</select>
@@ -84,7 +84,7 @@
 									   <option value="">--请选择--</option>
 									   <c:forEach var="appCategory" items="${categoryLevel3List}">
 									   		<option <c:if test="${appCategory.id == queryCategoryLevel3 }">selected="selected"</c:if>
-									   		value="${appCategory.id}">${appCategory.categoryName}</option>
+									   		value="${appCategory.id}">${appCategory.categoryname}</option>
 									   </c:forEach>
 									</c:if>
         						</select>
@@ -158,19 +158,19 @@
 							<tbody>
 								<c:forEach var="appInfo" items="${appInfoList }" varStatus="status">
 									<tr role="row" class="odd">
-										<td tabindex="0" class="sorting_1">${appInfo.softwareName}</td>
-										<td>${appInfo.APKName }</td>
-										<td>${appInfo.softwareSize }</td>
-										<td>${appInfo.flatformName }</td>
-										<td>${appInfo.categoryLevel1Name } -> ${appInfo.categoryLevel2Name } -> ${appInfo.categoryLevel3Name }</td>
-										<td>${appInfo.statusName }</td>
+										<td tabindex="0" class="sorting_1">${appInfo.softwarename}</td>
+										<td>${appInfo.apkname }</td>
+										<td>${appInfo.softwaresize }</td>
+										<td>${appInfo.flatformname }</td>
+										<td>${appInfo.categorylevelname1 } -> ${appInfo.categorylevelname2 } -> ${appInfo.categorylevelname3 }</td>
+										<td>${appInfo.statu }</td>
 										<td>${appInfo.downloads }</td>
-										<td>${appInfo.versionNo }</td>
+										<td>${appInfo.versionname }</td>
 										<td>
 										<button type="button" class="btn btn-default checkApp" 
-											appinfoid="${appInfo.id }" versionid="${appInfo.versionId }" status="${appInfo.status }" 
-											statusname="${appInfo.statusName }"											
-											data-toggle="tooltip" data-placement="top" title="" data-original-title="查看并审核APP">审核</button>
+											appinfoid="${appInfo.id } " versionid="${appInfo.versionid }" status="${appInfo.status }"
+											statusname="${appInfo.statu }"
+											data-toggle="tooltip" data-placement="top" title="" data-original-title="查看并审核APP">审核 </button>
 										</td>
 									</tr>
 								</c:forEach>

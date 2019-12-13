@@ -13,11 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/dev")
@@ -188,19 +186,44 @@ public class DevController {
             @RequestParam(value = "supportROM",required = false) String supportROM,
             @RequestParam(value = "interfaceLanguage",required = false) String interfaceLanguage,
             @RequestParam(value = "softwareSize",required = false) BigDecimal softwareSize,
-            @RequestParam(value = "flatformId") Long flatformId,
+            @RequestParam(value = "flatformId",required = false) Long flatformId,
             @RequestParam(value = "downloads",required = false) Long downloads,
             @RequestParam(value = "categoryLevel1",required = false) Long categoryLevel1,
             @RequestParam(value = "categoryLevel2",required = false) Long categoryLevel2,
             @RequestParam(value = "categoryLevel3",required = false) Long categoryLevel3,
             @RequestParam(value = "status",required = false) Long status,
             @RequestParam(value = "appInfo",required = false) String appInfo,
+            @RequestParam(value = "logo",required = false) MultipartFile logo,
             Model model,
             HttpSession session,
-            HttpServletRequest request,
-            @RequestParam(value = "a_logoPicPath",required = false) MultipartFile logo
-    ){
+            HttpServletRequest request
+
+    ) throws IOException {
+        //保存数据库的路径
+        String sqlPath = null;
+        //定义文件保存的本地路径
+        String localPath="D:\\IntelliJ IDEA 2019.2.1\\MyssmTest\\src\\main\\webapp\\statics\\logo\\";
+        //定义 文件名
+        String filename =null;
+        if(!logo.isEmpty()){
+            //生成uuid作为文件名称
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+            String type = logo.getContentType().split("/")[0];
+            String suffixName = logo.getContentType().split("/")[1];
+            filename = uuid+"."+suffixName;
+            if (!type.equals("image")){
+                return appinfoadd();
+            }
+            logo.transferTo(new File(localPath+filename));
+            System.out.println(localPath+filename);
+        }
+
+
+
+
         AppInfo appInfo1 = new AppInfo();
+        appInfo1.setLogolocpath(localPath+filename);
+        appInfo1.setLogopicpath("/statics/logo/"+filename);
         appInfo1.setSoftwarename(softwareName);
         appInfo1.setApkname(APKName);
         appInfo1.setSupportrom(supportROM);
@@ -257,9 +280,30 @@ public class DevController {
             @RequestParam("versionSize") BigDecimal versionSize,
             @RequestParam("publishStatus") Long publishStatus,
             @RequestParam("versionInfo") String versionInfo,
+            @RequestParam(value = "a_downloadLink",required = false) MultipartFile a_downloadLink,
             Model model
-    ){
+    ) throws IOException {
+        //保存数据库的路径
+        String sqlPath = null;
+        //定义文件保存的本地路径
+        String localPath="D:\\IntelliJ IDEA 2019.2.1\\MyssmTest\\src\\main\\webapp\\statics\\apk\\";
+        //定义 文件名
+        String filename =null;
+        if(!a_downloadLink.isEmpty()){
+            //生成uuid作为文件名称
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+            String suffixName = a_downloadLink.getOriginalFilename().split("\\.")[1];
+            filename = uuid+"."+suffixName;
+            if (!suffixName.equals("apk")){
+                return addVersion(appId,model);
+            }
+            a_downloadLink.transferTo(new File(localPath+filename));
+        }
+
         AppVersion appVersion = new AppVersion();
+        appVersion.setDownloadlink("/statics/apk/"+filename);
+        appVersion.setApkfilename(filename);
+        appVersion.setApklocpath(localPath+filename);
         appVersion.setAppid(appId);
         appVersion.setVersionno(versionNo);
         appVersion.setVersionsize(versionSize);
@@ -275,7 +319,6 @@ public class DevController {
         if (b>0) {
             return addVersion(appId, model);
         }else{
-            System.out.println("增加失败");
             return addVersion(appId, model);
         }
     }

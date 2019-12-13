@@ -291,4 +291,8 @@
       modifyDate = #{modifydate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="userTypeById" parameterType="Long" resultType="String">
+    SELECT valueName FROM `data_dictionary` WHERE typeCode = 'USER_TYPE' AND valueId = #{id}
+  </select>
+
 </mapper>

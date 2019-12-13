@@ -545,4 +545,7 @@
       versionId = #{versionid,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <update id="checkApp" parameterType="Long" >
+      UPDATE app_info SET app_info.status=2 WHERE id = #{aid}
+  </update>
 </mapper>
